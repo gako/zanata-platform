@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.zanata</groupId>
   <artifactId>parent</artifactId>
-  <version>4.6.3-SNAPSHOT</version>
+  <version>4.6.2</version>
   <name>Zanata Parent POM</name>
   <description>Parent pom for Zanata modules</description>
   <url>http://zanata.org/</url>
@@ -22,7 +22,7 @@
          See https://issues.apache.org/jira/browse/MPIR-234?focusedCommentId=14663321&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-14663321
     -->
     <url>https://github.com/zanata/zanata-platform/tree/master/</url>
-    <tag>HEAD</tag>
+    <tag>platform-4.6.2</tag>
   </scm>
 
   <licenses>
@@ -175,6 +175,9 @@
   </contributors>
 
   <properties>
+  
+	<zanata.version>4.6.2</zanata.version>
+  
     <!--
     Version of java compiler used for building. (Specified as major.minor,
     as used by javac -source and -target).
@@ -212,7 +215,7 @@
     <restrict.skip>true</restrict.skip>
 
     <hamcrest.version>1.3</hamcrest.version>
-    <findbugs.maven.version>3.0.1</findbugs.maven.version>
+    <findbugs.maven.version>3.0.5</findbugs.maven.version>
     <!-- Note: Fedora 23 has 2.4.4. -->
     <groovy.version>2.4.4</groovy.version>
     <!-- Fedora 27 is still on 18.0: https://apps.fedoraproject.org/packages/guava -->
@@ -344,7 +347,7 @@
           <dependency>
             <groupId>org.zanata</groupId>
             <artifactId>build-tools</artifactId>
-            <version>${project.version}</version>
+            <version>${zanata.version}</version>
           </dependency>
         </dependencies>
       </plugin>
@@ -587,7 +590,7 @@
           <dependency>
             <groupId>org.zanata</groupId>
             <artifactId>build-tools</artifactId>
-            <version>${project.version}</version>
+            <version>${zanata.version}</version>
           </dependency>
         </dependencies>
         <executions>
@@ -612,7 +615,7 @@
           <dependency>
             <groupId>org.zanata</groupId>
             <artifactId>build-tools</artifactId>
-            <version>${project.version}</version>
+            <version>${zanata.version}</version>
           </dependency>
         </dependencies>
       </plugin>
@@ -853,19 +856,6 @@
             </executions>
           </plugin>
 
-          <plugin>
-            <groupId>org.sonatype.plugins</groupId>
-            <artifactId>nexus-staging-maven-plugin</artifactId>
-            <version>1.6.8</version>
-            <extensions>true</extensions>
-            <configuration>
-              <!-- The Base URL of Nexus instance where we want to stage -->
-              <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-              <!-- The server "id" element from settings to use authentication from -->
-              <serverId>sonatype-staging</serverId>
-            </configuration>
-          </plugin>
-
           <!-- Deploy javadocs to OSSRH -->
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
@@ -886,25 +876,7 @@
               </execution>
             </executions>
           </plugin>
-
-          <!-- Deploy sign artifacts for OSSRH -->
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-gpg-plugin</artifactId>
-            <version>1.6</version>
-            <executions>
-              <execution>
-                <id>sign-artifacts</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>sign</goal>
-                </goals>
-              </execution>
-            </executions>
-            <configuration>
-              <useAgent>true</useAgent>
-            </configuration>
-          </plugin>
+          
         </plugins>
       </build>
       <dependencies>
@@ -1676,13 +1648,15 @@
   </reporting>
 
   <distributionManagement>
-    <snapshotRepository>
-      <id>sonatype-snapshots</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
-    <repository>
-      <id>sonatype-staging</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>
-  </distributionManagement>
+		<repository>
+			<id>nexus</id>
+			<name>Releases</name>
+			<url>https://ils-central.ilogs.com/repository/maven-releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>nexus</id>
+			<name>Snapshot</name>
+			<url>https://ils-central.ilogs.com/repository/maven-snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
 </project>

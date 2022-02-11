@@ -2,30 +2,32 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.zanata</groupId>
   <artifactId>build-tools</artifactId>
-  <version>4.6.3-SNAPSHOT</version>
+  <version>4.6.2</version>
   <name>Build Tools</name>
   <description>Build tools for Zanata modules</description>
   <url>http://zanata.org/</url>
   <packaging>jar</packaging>
 
-  <distributionManagement>
-    <snapshotRepository>
-      <id>sonatype-snapshots</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
-    <repository>
-      <id>sonatype-staging</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>
-  </distributionManagement>
-
   <scm>
     <connection>scm:git:https://github.com/zanata/zanata-platform.git</connection>
     <developerConnection>scm:git:git@github.com:zanata/zanata-platform.git</developerConnection>
     <url>https://github.com/zanata/zanata-platform/tree/master/build-tools</url>
-    <tag>HEAD</tag>
+    <tag>platform-4.6.2</tag>
   </scm>
 
+<distributionManagement>
+		<repository>
+			<id>nexus</id>
+			<name>Releases</name>
+			<url>https://ils-central.ilogs.com/repository/maven-releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>nexus</id>
+			<name>Snapshot</name>
+			<url>https://ils-central.ilogs.com/repository/maven-snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+	
   <licenses>
     <license>
       <name>GNU Lesser General Public License v2.1</name>
@@ -121,26 +123,7 @@
                 </goals>
               </execution>
             </executions>
-          </plugin>
-
-          <!-- Deploy sign artifacts for OSSRH -->
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-gpg-plugin</artifactId>
-            <version>1.6</version>
-            <executions>
-              <execution>
-                <id>sign-artifacts</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>sign</goal>
-                </goals>
-              </execution>
-            </executions>
-            <configuration>
-              <useAgent>true</useAgent>
-            </configuration>
-          </plugin>
+          </plugin>          
         </plugins>
       </build>
     </profile>
